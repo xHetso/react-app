@@ -7,7 +7,7 @@ import ChampiImage from '../../assets/champi.svg';
 import WalletComponent from '../../components/WalletBalance/WalletBalance';
 import styles from "./Education.module.css"
 
-export function Education() {
+const Education = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const points = [
         { x: 240, y: 170 },
@@ -167,3 +167,5 @@ export function Education() {
         </>
     );
 }
+
+export default Education;

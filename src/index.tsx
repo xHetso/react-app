@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -7,7 +7,8 @@ import { Wiz } from './pages/Wiz';
 import { Main } from './pages/Main';
 import { Profile } from './pages/Profile';
 import { Layout } from './layout/Layout';
-import { Education } from './pages/Education/Education';
+
+const Education = lazy(() => import('./pages/Education/Education'));
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Education />
+        element: <Suspense fallback={<>Загрузка...</>}><Education /></Suspense>
       },
       {
         path: '/wiz',
