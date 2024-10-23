@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import LevelMap from '../../assets/background.svg';
 import CoinImage from '../../assets/point.svg';
 import gemPath from "../../assets/gem.svg"
@@ -9,6 +9,7 @@ import styles from './Education.module.css';
 
 const Education = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [champi, setChampi] = useState({ x: 250, y: 1470 });
     const points = [
         { x: 240, y: 170 },
         { x: 230, y: 200 },
@@ -26,8 +27,8 @@ const Education = () => {
         { x: 280, y: 580 },
 
         { x: 160, y: 610 },
-        { x: 130, y: 610 },
-        { x: 100, y: 610 },
+        { x: 130, y: 611 },
+        { x: 100, y: 612 },
         { x: 70, y: 620 },
         { x: 50, y: 650 },
         { x: 70, y: 680 },
@@ -60,8 +61,8 @@ const Education = () => {
         { x: 70, y: 1490 },
         { x: 100, y: 1520 },
         { x: 130, y: 1530 },
-        { x: 170, y: 1530 },
-        { x: 210, y: 1530 },
+        { x: 170, y: 1531 },
+        { x: 210, y: 1532 },
     ];
 
     const coins = [
@@ -73,7 +74,26 @@ const Education = () => {
         { x: 245, y: 351 },
     ];
 
-    const champi = { x: 250, y: 1470 };
+    const draw = (ctx: CanvasRenderingContext2D, mapImage: HTMLImageElement, coinImage: HTMLImageElement, champiImage: HTMLImageElement) => {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(mapImage, -750, 0, 1600, 1600);
+
+        points.forEach(point => {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = '#373D32';
+            ctx.fill();
+        });
+
+        coins.forEach((coin, i) => {
+            ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
+            ctx.font = '20px Montserrat';
+            ctx.fillStyle = '#000000';
+            ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
+        });
+
+        ctx.drawImage(champiImage, champi.x, champi.y, 82, 83);
+    };
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -92,26 +112,6 @@ const Education = () => {
                 const champiImage = new Image();
                 champiImage.src = ChampiImage;
 
-                const draw = () => {
-                    ctx.drawImage(mapImage, -750, 0, 1600, 1600);
-
-                    points.forEach(point => {
-                        ctx.beginPath();
-                        ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
-                        ctx.fillStyle = '#373D32';
-                        ctx.fill();
-                    });
-
-                    coins.forEach((coin, i) => {
-                        ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
-                        ctx.font = '20px Montserrat';
-                        ctx.fillStyle = '#000000';
-                        ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
-                    });
-
-                    ctx.drawImage(champiImage, champi.x, champi.y, 82, 83);
-                };
-
                 Promise.all([
                     new Promise<void>((resolve) => {
                         mapImage.onload = () => resolve();
@@ -123,13 +123,13 @@ const Education = () => {
                         champiImage.onload = () => resolve();
                     })
                 ]).then(() => {
-                    draw();
+                    draw(ctx, mapImage, coinImage, champiImage);
                 }).catch(err => {
                     console.error('Ошибка загрузки изображения:', err);
                 });
             }
         }
-    }, []);
+    }, [champi]);
 
     const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
         const canvas = canvasRef.current;
@@ -138,21 +138,27 @@ const Education = () => {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            points.forEach(point => {
-                const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
-                if (distance < 6) {
-                    console.log(`Координаты точки: (${point.x}, ${point.y})`);
-                }
-            });
-
+            let coinClicked = false;
             coins.forEach(coin => {
                 const distance = Math.sqrt((x - coin.x) ** 2 + (y - coin.y) ** 2);
                 if (distance < 33) {
                     console.log(`Монета нажата по координатам: (${coin.x}, ${coin.y})`);
+                    setChampi({ x: coin.x - 41, y: coin.y - 41 });
+                    coinClicked = true;
                 }
             });
+
+            if (!coinClicked) {
+                points.forEach(point => {
+                    const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
+                    if (distance < 6) {
+                        console.log(`Координаты точки: (${point.x}, ${point.y})`);
+                    }
+                });
+            }
         }
     };
+
 
     return (
         <>
@@ -168,6 +174,6 @@ const Education = () => {
             <canvas className={styles.canvas} ref={canvasRef} onClick={handleClick} />
         </>
     );
-}
+};
 
 export default Education;
