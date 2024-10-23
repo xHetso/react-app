@@ -43,22 +43,23 @@ const Education = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [champi, setChampi] = useState({ x: 250, y: 1470 });
 
+    const getOffsetX = () => (window.innerWidth - 375) / 2;
+
     const draw = useMemo(() => {
         return (ctx: CanvasRenderingContext2D, mapImage: HTMLImageElement, coinImage: HTMLImageElement, champiImage: HTMLImageElement) => {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            const deviceWidth = window.innerWidth;
-            const offsetX = (deviceWidth - 375) / 2;
+            const offsetX = getOffsetX();
             ctx.drawImage(mapImage, -750 + offsetX, 0, 1600, 1600);
 
             POINTS.forEach(point => {
                 ctx.beginPath();
-                ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+                ctx.arc(point.x + offsetX, point.y, 6, 0, Math.PI * 2);
                 ctx.fillStyle = '#373D32';
                 ctx.fill();
             });
 
             COINS.forEach((coin, i) => {
-                ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
+                ctx.drawImage(coinImage, coin.x - 10 + offsetX, coin.y - 10, 66, 30);
                 ctx.font = '20px Montserrat';
                 ctx.fillStyle = '#000000';
                 ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
@@ -95,20 +96,19 @@ const Education = () => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+            const offsetX = getOffsetX();
 
-            const coinClicked = COINS.some(coin => {
-                const distanceSq = (x - coin.x) ** 2 + (y - coin.y) ** 2;
-                if (distanceSq < 33 ** 2) {
-                    console.log(`Монета нажата по координатам: (${coin.x}, ${coin.y})`);
-                    setChampi({ x: coin.x - 41, y: coin.y - 41 });
-                    return true;
-                }
-                return false;
+            const clickedCoin = COINS.find(coin => {
+                const distanceSq = (x - (coin.x + offsetX)) ** 2 + (y - coin.y) ** 2;
+                return distanceSq < 33 ** 2;
             });
 
-            if (!coinClicked) {
+            if (clickedCoin) {
+                console.log(`Монета нажата по координатам: (${clickedCoin.x}, ${clickedCoin.y})`);
+                setChampi({ x: clickedCoin.x - 41 + offsetX, y: clickedCoin.y - 41 });
+            } else {
                 POINTS.forEach(point => {
-                    const distanceSq = (x - point.x) ** 2 + (y - point.y) ** 2;
+                    const distanceSq = (x - (point.x + offsetX)) ** 2 + (y - point.y) ** 2;
                     if (distanceSq < 6 ** 2) {
                         console.log(`Координаты точки: (${point.x}, ${point.y})`);
                     }
