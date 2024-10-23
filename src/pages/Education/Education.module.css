@@ -15,7 +15,6 @@
 }
 
 .canvas {
-  width: 100vw;
   transform: scale(1);
   overflow: hidden;
 }

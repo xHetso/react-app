@@ -46,7 +46,9 @@ const Education = () => {
     const draw = useMemo(() => {
         return (ctx: CanvasRenderingContext2D, mapImage: HTMLImageElement, coinImage: HTMLImageElement, champiImage: HTMLImageElement) => {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            ctx.drawImage(mapImage, -750, 0, 1600, 1600);
+            const deviceWidth = window.innerWidth;
+            const offsetX = (deviceWidth - 375) / 2;
+            ctx.drawImage(mapImage, -750 + offsetX, 0, 1600, 1600);
 
             POINTS.forEach(point => {
                 ctx.beginPath();
@@ -71,7 +73,7 @@ const Education = () => {
         if (canvas) {
             const ctx = canvas.getContext('2d');
             if (ctx) {
-                canvas.width = 375;
+                canvas.width = window.innerWidth;
                 canvas.height = 1659;
 
                 Promise.all([
@@ -99,9 +101,9 @@ const Education = () => {
                 if (distanceSq < 33 ** 2) {
                     console.log(`Монета нажата по координатам: (${coin.x}, ${coin.y})`);
                     setChampi({ x: coin.x - 41, y: coin.y - 41 });
-                    return true; // Coin was clicked
+                    return true;
                 }
-                return false; // Coin was not clicked
+                return false;
             });
 
             if (!coinClicked) {
