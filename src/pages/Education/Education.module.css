@@ -1,0 +1,9 @@
+.gemBalance {
+  position: absolute;
+  right: 15px;
+}
+
+.chipBalance {
+  position: absolute;
+  left: 15px;
+}

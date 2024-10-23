@@ -1,7 +1,11 @@
 import { useRef, useEffect } from 'react';
 import LevelMap from '../../assets/background.svg';
 import CoinImage from '../../assets/point.svg';
+import gemPath from "../../assets/gem.svg"
+import chip from "../../assets/chip.svg"
 import ChampiImage from '../../assets/champi.svg';
+import WalletComponent from '../../components/WalletBalance/WalletBalance';
+import styles from "./Education.module.css"
 
 export function Education() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -151,6 +155,15 @@ export function Education() {
     };
 
     return (
-        <canvas ref={canvasRef} style={{ border: '1px solid black' }} onClick={handleClick} />
+        <>
+            <div className={styles.gemBalance}>
+                <WalletComponent icon={gemPath} value={14697} textColor="#E895FF" />
+            </div>
+            <div className={styles.chipBalance}>
+                <WalletComponent icon={chip} value={20} textColor="#EEC242" />
+            </div>
+
+            <canvas ref={canvasRef} style={{ border: '1px solid black' }} onClick={handleClick} />
+        </>
     );
 }
