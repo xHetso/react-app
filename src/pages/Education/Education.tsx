@@ -61,12 +61,12 @@ export function Education() {
     ];
 
     const coins = [
-        { x: 245, y: 351 },
-        { x: 200, y: 590 },
-        { x: 90, y: 710 },
-        { x: 300, y: 900 },
-        { x: 90, y: 1050 },
         { x: 10, y: 1350 },
+        { x: 90, y: 1050 },
+        { x: 300, y: 900 },
+        { x: 90, y: 710 },
+        { x: 200, y: 590 },
+        { x: 245, y: 351 },
     ];
 
     const champi = { x: 250, y: 1470 };
@@ -98,8 +98,11 @@ export function Education() {
                         ctx.fill();
                     });
 
-                    coins.forEach(coin => {
+                    coins.forEach((coin, i) => {
                         ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
+                        ctx.font = '20px Arial';
+                        ctx.fillStyle = 'black';
+                        ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
                     });
 
                     ctx.drawImage(champiImage, champi.x, champi.y, 82, 83);
@@ -124,30 +127,7 @@ export function Education() {
         }
     }, []);
 
-    const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-        const canvas = canvasRef.current;
-        if (canvas) {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            points.forEach(point => {
-                const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
-                if (distance < 6) {
-                    console.log(`Координаты точки: (${point.x}, ${point.y})`);
-                }
-            });
-
-            coins.forEach(coin => {
-                const distance = Math.sqrt((x - coin.x) ** 2 + (y - coin.y) ** 2);
-                if (distance < 33) {
-                    console.log(`Монета нажата по координатам: (${coin.x}, ${coin.y})`);
-                }
-            });
-        }
-    };
-
     return (
-        <canvas ref={canvasRef} style={{ border: '1px solid black' }} onClick={handleClick} />
+        <canvas ref={canvasRef} style={{ border: '1px solid black' }} />
     );
 }
