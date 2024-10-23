@@ -127,7 +127,30 @@ export function Education() {
         }
     }, []);
 
+    const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            points.forEach(point => {
+                const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
+                if (distance < 6) {
+                    console.log(`Координаты точки: (${point.x}, ${point.y})`);
+                }
+            });
+
+            coins.forEach(coin => {
+                const distance = Math.sqrt((x - coin.x) ** 2 + (y - coin.y) ** 2);
+                if (distance < 33) {
+                    console.log(`Монета нажата по координатам: (${coin.x}, ${coin.y})`);
+                }
+            });
+        }
+    };
+
     return (
-        <canvas ref={canvasRef} style={{ border: '1px solid black' }} />
+        <canvas ref={canvasRef} style={{ border: '1px solid black' }} onClick={handleClick} />
     );
 }
