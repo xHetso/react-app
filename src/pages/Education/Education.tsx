@@ -41,14 +41,15 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
 
 const Education = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [champi, setChampi] = useState({ x: 250, y: 1470 });
-
-    const getOffsetX = () => (window.innerWidth - 375) / 2;
+    const deviceWidth = window.innerWidth;
+    const offsetX = (deviceWidth - 375) / 2;
+    const [champi, setChampi] = useState({ x: 250 + offsetX, y: 1470 });
 
     const draw = useMemo(() => {
         return (ctx: CanvasRenderingContext2D, mapImage: HTMLImageElement, coinImage: HTMLImageElement, champiImage: HTMLImageElement) => {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            const offsetX = getOffsetX();
+            const deviceWidth = window.innerWidth;
+            const offsetX = (deviceWidth - 375) / 2;
             ctx.drawImage(mapImage, -750 + offsetX, 0, 1600, 1600);
 
             POINTS.forEach(point => {
@@ -62,7 +63,7 @@ const Education = () => {
                 ctx.drawImage(coinImage, coin.x - 10 + offsetX, coin.y - 10, 66, 30);
                 ctx.font = '20px Montserrat';
                 ctx.fillStyle = '#000000';
-                ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
+                ctx.fillText(String(i + 2), coin.x + 18 + offsetX, coin.y + 10);
             });
 
             ctx.drawImage(champiImage, champi.x, champi.y, 82, 83);
@@ -96,7 +97,7 @@ const Education = () => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const offsetX = getOffsetX();
+            const offsetX = (window.innerWidth - 375) / 2;
 
             const clickedCoin = COINS.find(coin => {
                 const distanceSq = (x - (coin.x + offsetX)) ** 2 + (y - coin.y) ** 2;
@@ -116,6 +117,7 @@ const Education = () => {
             }
         }
     };
+
 
     return (
         <>
