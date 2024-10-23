@@ -102,7 +102,7 @@ export function Education() {
                         ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
                     });
 
-                    ctx.drawImage(champiImage, champi.x, champi.y, 71, 78);
+                    ctx.drawImage(champiImage, champi.x, champi.y, 82, 83);
                 };
 
                 Promise.all([
