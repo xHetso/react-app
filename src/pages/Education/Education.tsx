@@ -69,7 +69,7 @@ export function Education() {
         { x: 10, y: 1350 },
     ];
 
-    const champiPosition = { x: 250, y: 1500 };
+    const champi = { x: 250, y: 1470 };
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -102,7 +102,7 @@ export function Education() {
                         ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
                     });
 
-                    ctx.drawImage(champiImage, champiPosition.x, champiPosition.y, 50, 50);
+                    ctx.drawImage(champiImage, champi.x, champi.y, 71, 78);
                 };
 
                 Promise.all([
