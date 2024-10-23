@@ -4,16 +4,17 @@
   position: fixed;
   top: 20px;
 
-  width: 100%; /* Задаем ширину для корректного растягивания */
-  padding: 0 20px; /* Добавляем отступы по бокам */
+  width: 100%;
+  padding: 0 20px;
 }
 
 .wallet .left,
 .wallet .right {
   display: flex;
-  align-items: center; /* Для выравнивания по вертикали */
+  align-items: center;
 }
 
 .canvas {
   width: 100vw;
+  transform: scale(1);
 }
