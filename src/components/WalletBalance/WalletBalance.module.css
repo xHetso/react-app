@@ -3,6 +3,8 @@
   align-items: center;
   border-radius: 25px;
   width: 123.58px;
+  height: 34px;
+  background: linear-gradient(#505050 0.03%, #313131 78.98%);
 }
 
 .leftSide {
@@ -12,8 +14,8 @@
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   margin-right: 10px;
 }
 
@@ -28,6 +30,6 @@
 }
 
 .plusIcon {
-  width: 30px;
-  height: 30px;
+  width: 29px;
+  height: 29px;
 }

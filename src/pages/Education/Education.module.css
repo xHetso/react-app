@@ -1,9 +1,19 @@
-.gemBalance {
-  position: absolute;
-  right: 15px;
+.wallet {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 20px;
+
+  width: 100%; /* Задаем ширину для корректного растягивания */
+  padding: 0 20px; /* Добавляем отступы по бокам */
 }
 
-.chipBalance {
-  position: absolute;
-  left: 15px;
+.wallet .left,
+.wallet .right {
+  display: flex;
+  align-items: center; /* Для выравнивания по вертикали */
+}
+
+.canvas {
+  width: 100vw;
 }

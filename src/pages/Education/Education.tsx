@@ -5,7 +5,7 @@ import gemPath from "../../assets/gem.svg"
 import chip from "../../assets/chip.svg"
 import ChampiImage from '../../assets/champi.svg';
 import WalletComponent from '../../components/WalletBalance/WalletBalance';
-import styles from "./Education.module.css"
+import styles from './Education.module.css';
 
 const Education = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -156,14 +156,16 @@ const Education = () => {
 
     return (
         <>
-            <div className={styles.gemBalance}>
-                <WalletComponent icon={gemPath} value={14697} textColor="#E895FF" />
-            </div>
-            <div className={styles.chipBalance}>
-                <WalletComponent icon={chip} value={20} textColor="#EEC242" />
+            <div className={styles.wallet}>
+                <div >
+                    <WalletComponent icon={gemPath} value={14697} textColor="#E895FF" />
+                </div>
+                <div >
+                    <WalletComponent icon={chip} value={20} textColor="#EEC242" />
+                </div>
             </div>
 
-            <canvas ref={canvasRef} style={{ border: '1px solid black' }} onClick={handleClick} />
+            <canvas className={styles.canvas} ref={canvasRef} onClick={handleClick} />
         </>
     );
 }
