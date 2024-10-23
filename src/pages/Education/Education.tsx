@@ -100,8 +100,8 @@ export function Education() {
 
                     coins.forEach((coin, i) => {
                         ctx.drawImage(coinImage, coin.x - 10, coin.y - 10, 66, 30);
-                        ctx.font = '20px Arial';
-                        ctx.fillStyle = 'black';
+                        ctx.font = '20px Montserrat';
+                        ctx.fillStyle = '#000000';
                         ctx.fillText(String(i + 2), coin.x + 18, coin.y + 10);
                     });
 
